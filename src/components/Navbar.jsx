@@ -14,7 +14,6 @@ const Navbar = () => {
       {/* Menu icon for mobile */}
       <button
         className="text-white sm:hidden block focus:outline-none hover:text-blue-200"
-        onClick={() => setOpen(!open)}
       >
         {open ? <X size={28} /> : <Menu size={28} />}
       </button>
