@@ -75,6 +75,11 @@ function App() {
             type="text"
             placeholder="Add a todo"
             className="border-2 border-gray-400 rounded-lg p-2 w-full sm:w-1/2 my-3 sm:my-0"
+             onKeyDown={(e) => {
+             if (e.key === "Enter") {
+            handleAdd(); // Trigger same function as button click
+             }}}
+            
           />
           <button
             onClick={handleAdd}
