@@ -8,12 +8,12 @@ const Navbar = () => {
     <nav className="bg-slate-700 w-full border-gray-200 px-4 sm:px-6 flex justify-between items-center h-[13vh] relative">
       {/* Logo */}
       <h1 className="text-2xl sm:text-3xl text-blue-100 font-bold mx-4 sm:mx-10">
-        iTask
+        iTask {/* Minor change for GitHub test */}
       </h1>
 
       {/* Menu icon for mobile */}
       <button
-        className="text-white sm:hidden block focus:outline-none"
+        className="text-white sm:hidden block focus:outline-none hover:text-blue-200"
         onClick={() => setOpen(!open)}
       >
         {open ? <X size={28} /> : <Menu size={28} />}
