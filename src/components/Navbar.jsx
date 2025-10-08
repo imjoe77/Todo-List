@@ -1,18 +1,37 @@
-import React from "react";
+import React, { useState } from "react";
+import { Menu, X } from "lucide-react";
 
 const Navbar = () => {
+  const [open, setOpen] = useState(false);
+
   return (
-    <nav className="bg-slate-700 w-full h-[13vh] border-gray-200 px-6  flex flex-row justify-between items-center">
-      <h1 className="text-3xl text-blue-100 font-bold mx-10">
+    <nav className="bg-slate-700 w-full border-gray-200 px-4 sm:px-6 flex justify-between items-center h-[13vh] relative">
+      {/* Logo */}
+      <h1 className="text-2xl sm:text-3xl text-blue-100 font-bold mx-4 sm:mx-10">
         iTask
       </h1>
 
-      <ul className="  flex flex-row gap-8 text-white text-xl font-semibold mx-20 text-center">
-        <li className="hover:text-blue-300 hover:shadow-lg transition-all duration-200 cursor-pointer">Home</li>
-        <li className="hover:text-blue-300 hover:shadow-lg transition-all duration-200 cursor-pointer">Services</li>
-        <li className="hover:text-blue-300 hover:shadow-lg transition-all duration-200 cursor-pointer">Merch</li>
-        <li className="hover:text-blue-300 hover:shadow-lg transition-all duration-200 cursor-pointer">Contact</li>
-        <li className="hover:text-blue-300 hover:shadow-lg transition-all duration-200 cursor-pointer">About Us</li>
+      {/* Menu icon for mobile */}
+      <button
+        className="text-white sm:hidden block focus:outline-none"
+        onClick={() => setOpen(!open)}
+      >
+        {open ? <X size={28} /> : <Menu size={28} />}
+      </button>
+
+      {/* Nav Links */}
+      <ul
+        className={`${
+          open
+            ? "flex flex-col absolute top-[13vh] left-0 w-full bg-slate-700 py-4 space-y-3 items-center"
+            : "hidden"
+        } sm:flex sm:flex-row sm:static sm:bg-transparent sm:space-y-0 sm:gap-8 sm:items-center text-white font-semibold text-sm sm:text-base md:text-lg transition-all duration-300`}
+      >
+        <li className="hover:text-blue-300 cursor-pointer">Home</li>
+        <li className="hover:text-blue-300 cursor-pointer">Services</li>
+        <li className="hover:text-blue-300 cursor-pointer">Merch</li>
+        <li className="hover:text-blue-300 cursor-pointer">Contact</li>
+        <li className="hover:text-blue-300 cursor-pointer">About Us</li>
       </ul>
     </nav>
   );
