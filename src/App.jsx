@@ -4,9 +4,13 @@ import { FaEdit } from "react-icons/fa";
 import { MdDeleteSweep } from "react-icons/md";
 
 function App() {
+  //State variables for input, todos, and finished status
   const [todo, settodo] = useState("");
   const [finished, setfinished] = useState(true);
 
+// State to manage the list of todos, initialized from localStorage
+  // If localStorage has invalid data, it will catch the error and return an empty array
+  // This ensures that the app does not crash if localStorage contains malformed JSON
   const [todos, settodos] = useState(() => {
     try {
       const todoString = localStorage.getItem("todos");
@@ -17,38 +21,44 @@ function App() {
     }
   });
 
-  const [eid, seteid] = useState(null);
 
-  useEffect(() => {
-    localStorage.setItem("todos", JSON.stringify(todos));
-  }, [todos]);
-
-  const handleEdit = (id) => {
-    const todotoEdit = todos.find((t) => t.id === id);
-    settodo(todotoEdit.todo);
-    seteid(id);
+   // Function to handle input changes and update the todo state
+   const handleChange = (e) => {
+    settodo(e.target.value);
   };
-
+  // Function to add a new todo or save an edited one
+  // It checks if the input is not empty and whether it's in edit mode or add mode
+  // After adding or saving, it clears the input field
+   const [eid, seteid] = useState(null);
   const handleAdd = () => {
     if (!todo.trim()) return;
-
     if (eid) {
       settodos(todos.map((t) => (t.id === eid ? { ...t, todo } : t)));
       seteid(null);
     } else {
       settodos([...todos, { id: Date.now(), todo, isCompleted: false }]);
     }
-
-    settodo("");
+     settodo("");
   };
+
+  // Function to handle editing a todo
+  // It finds the todo to edit, sets the input field with its value, and sets the edit id 
+  const handleEdit = (id) => {
+    const todotoEdit = todos.find((t) => t.id === id);
+    settodo(todotoEdit.todo);
+    seteid(id);
+  };
+
+    // Effect to sync todos with localStorage whenever the todos state changes
+     useEffect(() => {
+     localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
 
   const handleDelete = (id) => {
     settodos(todos.filter((t) => t.id !== id));
   };
 
-  const handleChange = (e) => {
-    settodo(e.target.value);
-  };
+ 
 
   const handleToggle = (stodo) => {
     settodos(
@@ -61,14 +71,16 @@ function App() {
   return (
     <>
       <Navbar />
-
+      {/* Overall body container */}
       <div className="container bg-gray-300 min-h-[83vh] w-[95vw] m-auto my-5 rounded-xl relative overflow-auto p-4 sm:p-6 md:p-8">
+        
         {/* Top Section */}
         <h1 className="text-xl sm:text-2xl font-bold mx-3 sm:mx-8 mt-2 sm:mt-5">
           Add a Todo
         </h1>
 
         <div className="flex flex-col sm:flex-row items-center sm:items-start sm:gap-4 mx-3 sm:mx-8">
+          {/* Takes input for the todo */}
           <input
             onChange={handleChange}
             value={todo}
@@ -79,16 +91,19 @@ function App() {
              if (e.key === "Enter") {
             handleAdd(); // Trigger same function as button click
              }}}
+            />
             
-          />
+            {/* Button to add or save the todo */}
           <button
             onClick={handleAdd}
             className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-all duration-200 w-full sm:w-auto"
           >
+            {/* eid is the edit id state variable to determine button text   */}
             {eid ? "Save" : "Add"}
           </button>
         </div>
 
+        {/* Checkbox to toggle finished todos */}
         <div className="flex items-center mx-3 sm:mx-8 mt-4">
           <input
             className="mr-2 w-4 h-4"
@@ -97,8 +112,6 @@ function App() {
             onChange={() => setfinished(!finished)}
           />
           <label className="text-base sm:text-lg">Show Finished</label>
-        
-          
         </div>
         <div className="bg-black/100 w-auto m-2 p-0.5 h-0.9 opacity-30 rounded"></div>
 
@@ -138,12 +151,15 @@ function App() {
                 </div>
 
                 <div className="btn flex gap-2 self-end sm:self-auto">
+                   {/* Edit button to modify the todo  */}
                   <button
                     onClick={() => handleEdit(i.id)}
                     className="bg-blue-500 text-white px-4 py-1.5 rounded-lg hover:bg-blue-600 transition-all duration-200 text-sm sm:text-base"
                   >
                     <FaEdit />
                   </button>
+
+                    
                   <button
                     onClick={() => handleDelete(i.id)}
                     className="bg-blue-500 text-white px-4 py-1.5 rounded-lg hover:bg-blue-600 transition-all duration-200 text-sm sm:text-base"

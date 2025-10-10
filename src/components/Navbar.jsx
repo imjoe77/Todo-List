@@ -28,9 +28,9 @@ const Navbar = () => {
       >
         <li className="hover:text-blue-300 cursor-pointer">Home</li>
         <li className="hover:text-blue-300 cursor-pointer">Services</li>
-        <li className="hover:text-blue-300 cursor-pointer">Merch</li>
+        <li className="hover:text-blue-300 cursor-pointer">Abou us</li>
         <li className="hover:text-blue-300 cursor-pointer">Contact</li>
-        <li className="hover:text-blue-300 cursor-pointer">About Us</li>
+        <a href="https://github.com/imjoe77/Todo-List" className="hover:text-blue-300 cursor-pointer">Github</a>
       </ul>
     </nav>
   );
